@@ -12,7 +12,7 @@ function Search() {
             <div className="mb-10">
                 <SearchForm onSearch={onSearch} />
             </div>
-            <div></div>
+            <div>1</div>
         </div>
     );
 }
