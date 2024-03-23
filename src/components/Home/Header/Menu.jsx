@@ -8,7 +8,7 @@ export default function HeaderMenu({ setShow, show }) {
     const [sideStyle, setSideStyle] = useState({});
     const resize = () => {
         if (window?.innerWidth && window?.innerWidth < 576) setSideStyle({ height: "100%", width: "100%", top: "0" });
-        else setSideStyle({ "max-height": "480px", width: "320px", top: "64px" });
+        else setSideStyle({ "maxHeight": "480px", width: "320px", top: "64px" });
     };
     useEffect(resize, []);
     window.onresize = resize;

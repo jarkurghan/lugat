@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import HeaderMenu from "../Header/Menu";
+import HeaderMenu from "../Home/Header/Menu";
 import logo from "../../images/favicon.png";
 import Search from "./Search";
 
@@ -8,7 +8,7 @@ function Header() {
 
     return (
         <div className="header no-copy">
-            <div className="flex justify-between items-center px-6 h-full text-[#444]">
+            <div className="flex justify-between items-center pr-6 h-full text-[#444]">
                 <div>
                     <Search />
                 </div>

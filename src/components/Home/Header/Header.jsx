@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import HeaderMenu from "./Menu";
-import logo from "../../images/favicon.png";
+import logo from "../../../images/favicon.png";
 
 function Header() {
     const [show, setShow] = useState(false);

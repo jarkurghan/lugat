@@ -3,7 +3,6 @@ import { ToastContainer } from "react-toastify";
 import HomePage from "./pages/Home";
 import SearchPage from "./pages/Search";
 import WordPage from "./pages/Word";
-import Header from "./components/Header/Header";
 import Footer from "./components/Footer";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
