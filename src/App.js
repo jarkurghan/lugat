@@ -8,12 +8,14 @@ import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import { getWait } from "./store/waiting";
 import { useSelector } from "react-redux";
+import Spinner from "./components/Spinner";
 
 function App() {
     const spinner = useSelector(getWait);
 
     return (
         <div className="app">
+            {spinner && <Spinner />}
             <ToastContainer />
             <Routes>
                 <Route path="/" element={<HomePage />} />
@@ -21,7 +23,6 @@ function App() {
                 <Route path="/word/:word" element={<WordPage />} />
                 <Route path="/*" element={<Navigate to="/" />} />
             </Routes>
-            {spinner.toString()}
             <Footer />
         </div>
     );
