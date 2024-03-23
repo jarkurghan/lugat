@@ -1,12 +1,20 @@
 import React from "react";
 import SearchIcon from "../../tools/svg-icons/Search";
 import SearchService from "../../services/search";
+import { useDispatch, useSelector } from "react-redux";
+import { endWait, getWait, startWait } from "../../store/waiting";
 
 const Search = () => {
-    const onSearch = (e) => {
-        e.preventDefault();
+    const w = useSelector(getWait);
+    const dispatch = useDispatch();
+
+    const onSearch = async (e) => {
         // console.log(e);
-        SearchService.getWords();
+        e.preventDefault();
+
+        dispatch(startWait());
+        await SearchService.getWords();
+        dispatch(endWait());
     };
 
     return (
