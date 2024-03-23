@@ -2,15 +2,21 @@ import React from "react";
 import SearchIcon from "../../tools/svg-icons/Search";
 import SearchService from "../../services/search";
 import { useNavigate } from "react-router-dom";
+import { endWait, startWait } from "../../store/waiting";
+import { useDispatch } from "react-redux";
 
 const SearchForm = () => {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const onSearch = (e) => {
+    const onSearch = async (e) => {
         e.preventDefault();
         navigate("/search");
         // console.log(e);
-        // SearchService.getWords();
+
+        dispatch(startWait());
+        await SearchService.getWords(dispatch);
+        dispatch(endWait());
     };
 
     return (

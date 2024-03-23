@@ -1,11 +1,11 @@
 import React from "react";
 import SearchIcon from "../../tools/svg-icons/Search";
 import SearchService from "../../services/search";
-import { useDispatch, useSelector } from "react-redux";
-import { endWait, getWait, startWait } from "../../store/waiting";
+import { useDispatch } from "react-redux";
+import { endWait, startWait } from "../../store/waiting";
+import { setResult } from "../../store/word";
 
 const Search = () => {
-    const w = useSelector(getWait);
     const dispatch = useDispatch();
 
     const onSearch = async (e) => {
@@ -13,7 +13,7 @@ const Search = () => {
         e.preventDefault();
 
         dispatch(startWait());
-        await SearchService.getWords();
+        await SearchService.getWords(dispatch);
         dispatch(endWait());
     };
 

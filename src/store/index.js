@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-// import counterReducer from "./word/counterSlice";
 import waiting from "./waiting";
+import words from "./word";
 
 export const store = configureStore({
     reducer: {
         waiting: waiting,
-        // counter: counterReducer,
+        words: words,
     },
 });

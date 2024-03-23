@@ -1,3 +1,7 @@
+body {
+    background-color: #fbfbfb;
+}
+
 .app {
     position: relative;
     min-height: 100vh;
