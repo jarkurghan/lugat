@@ -1,19 +1,24 @@
 import React from "react";
 import SearchIcon from "../../tools/svg-icons/Search";
 import SearchService from "../../services/search";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { endWait, startWait } from "../../store/waiting";
-import { setResult } from "../../store/word";
+import { getWord, setWord } from "../../store/word";
 
 const Search = () => {
     const dispatch = useDispatch();
+    const word = useSelector(getWord);
+
+    const changeWord = async (e) => {
+        dispatch(setWord(e.target.value));
+    };
 
     const onSearch = async (e) => {
-        // console.log(e);
         e.preventDefault();
+        // console.log(e);
 
         dispatch(startWait());
-        await SearchService.getWords(dispatch);
+        await SearchService.getWords({ dispatch, word });
         dispatch(endWait());
     };
 
@@ -27,7 +32,7 @@ const Search = () => {
                     <SearchIcon />
                 </div>
                 <input
-                    // type="search"
+                    onChange={changeWord}
                     id="default-search"
                     className="transition block w-full outline-none p-2 ps-10 pr-24 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="So'zni kiriting"
