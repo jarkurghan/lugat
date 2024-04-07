@@ -96,7 +96,7 @@
 }
 
 .close {
-    padding: 5px;
-    margin: 5px;
+    float: right;
+    color: red;
     cursor: pointer;
 }

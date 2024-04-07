@@ -24,7 +24,12 @@ export default function HeaderMenu({ setShow, show }) {
 
     return (
         <div className={showtrue ? styles.fade : undefined} onClick={close}>
-            <div className={styles.modal} style={{ ...sideStyle, right: showtrue ? "0" : "-320px" }}>
+            <div className={styles.modal} style={{ ...sideStyle, right: showtrue ? "0" : "-576px" }}>
+                {sideStyle.height === "100%" && (
+                    <div className={styles.close} onClick={close}>
+                        &#x2715;
+                    </div>
+                )}
                 <div>Ilova haqida</div>
                 <div>Biz bilan bog'lanish</div>
             </div>

@@ -8,7 +8,7 @@ function Search() {
     const results = useSelector(getResult);
 
     return (
-        <div className="max-w-4xl ml-40">
+        <div className="max-w-5xl xl:max-w-4xl m-6 xl:ml-40">
             <Navbar />
             <div>
                 {results.map((e) => (

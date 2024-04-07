@@ -29,3 +29,20 @@ body {
     -ms-user-select: none;
     user-select: none;
 }
+
+.hide-scroll {
+    overflow: auto;
+}
+
+.hide-scroll::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+.hide-scroll::-webkit-scrollbar-thumb {
+    background: #444;
+}
+
+.hide-scroll::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
