@@ -1,12 +1,64 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getArguments, getWord, setArguments } from "../../store/word";
+import { endWait, startWait } from "../../store/waiting";
+import SearchService from "../../services/search";
 
 function Navbar() {
+    const dispatch = useDispatch();
+    const word = useSelector(getWord);
+    const args = useSelector(getArguments);
+    const defcns = "shadow-md px-4 py-1 rounded-md border cursor-pointer bg-blue-200";
+    const [cns, setcns] = useState({ word: defcns, definition: defcns, history: defcns, synonym: defcns, resource: defcns });
+
+    const setActivePart = (part) => {
+        let argums = [...args];
+
+        if (argums.length === 1 && argums.includes("word") && part === "word") return 0;
+
+        if (argums.includes(part)) {
+            cns[part] = cns[part].replaceAll(" bg-blue-200", "").replaceAll("bg-blue-200", "");
+            argums.splice(argums.indexOf(part), 1);
+            if (argums.length === 0) {
+                cns.word = defcns;
+                argums = ["word"];
+            }
+        } else {
+            cns[part] += " bg-blue-200";
+            argums.push(part);
+        }
+        
+        setcns({ ...cns });
+        dispatch(setArguments(argums));
+    };
+
+    const onSearch = async () => {
+        dispatch(startWait());
+        await SearchService.getWords({ dispatch, word, args });
+        dispatch(endWait());
+    };
+
+    useEffect(() => {
+        onSearch();
+    }, [args]);
+
     return (
-        <div className="no-copy hide-scroll flex items-baseline gap-4 mb-10" >
-            <div className="shadow-md px-4 py-1 rounded-md border">definition</div>
-            <div className="shadow-md px-4 py-1 rounded-md border">history&nbsp;of&nbsp;origin</div>
-            <div className="shadow-md px-4 py-1 rounded-md border">synonyms</div>
-            <div className="shadow-md px-4 py-1 rounded-md border">in&nbsp;resources</div>
+        <div className="no-copy hide-scroll flex items-baseline gap-4 mb-10">
+            <div className={cns.word} onClick={() => setActivePart("word")}>
+                word
+            </div>
+            <div className={cns.definition} onClick={() => setActivePart("definition")}>
+                definition
+            </div>
+            <div className={cns.history} onClick={() => setActivePart("history")}>
+                history&nbsp;of&nbsp;origin
+            </div>
+            <div className={cns.synonym} onClick={() => setActivePart("synonym")}>
+                synonyms
+            </div>
+            <div className={cns.resource} onClick={() => setActivePart("resource")}>
+                in&nbsp;resources
+            </div>
         </div>
     );
 }

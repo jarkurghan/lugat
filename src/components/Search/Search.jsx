@@ -3,11 +3,12 @@ import SearchIcon from "../../tools/svg-icons/Search";
 import SearchService from "../../services/search";
 import { useDispatch, useSelector } from "react-redux";
 import { endWait, startWait } from "../../store/waiting";
-import { getWord, setWord } from "../../store/word";
+import { getArguments, getWord, setWord } from "../../store/word";
 
 const Search = () => {
     const dispatch = useDispatch();
     const word = useSelector(getWord);
+    const args = useSelector(getArguments);
 
     const changeWord = async (e) => {
         dispatch(setWord(e.target.value));
@@ -18,7 +19,7 @@ const Search = () => {
         // console.log(e);
 
         dispatch(startWait());
-        await SearchService.getWords({ dispatch, word });
+        await SearchService.getWords({ dispatch, word, args });
         dispatch(endWait());
     };
 
