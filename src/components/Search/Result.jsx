@@ -3,6 +3,7 @@ import Navbar from "./Navbar";
 import { getResult } from "../../store/word";
 import { useSelector } from "react-redux";
 import SearchItem from "./ResultItem";
+import SearchNotFound from "./ResultNotFound";
 
 function Search() {
     const results = useSelector(getResult);
@@ -15,6 +16,7 @@ function Search() {
                     <SearchItem key={e.word} data={e} />
                 ))}
             </div>
+            {results.length === 0 && <SearchNotFound />}
         </div>
     );
 }
