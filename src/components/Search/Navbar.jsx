@@ -9,12 +9,20 @@ function Navbar() {
     const word = useSelector(getWord);
     const args = useSelector(getArguments);
     const defcns = "shadow-md px-4 py-1 rounded-md border cursor-pointer bg-blue-200";
-    const [cns, setcns] = useState({ word: defcns, definition: defcns, history: defcns, synonym: defcns, resource: defcns });
+    const [cns, setcns] = useState({});
+
+    useEffect(() => {
+        const parts = ["word", "definition", "history", "synonym", "resource"];
+        for (let i = 0; i < parts.length; i++)
+            if (args.includes(parts[i])) cns[parts[i]] = defcns;
+            else cns[parts[i]] = defcns.replaceAll(" bg-blue-200", "");
+    }, []);
 
     const setActivePart = (part) => {
         let argums = [...args];
 
-        if (argums.length === 1 && argums.includes("word") && part === "word") return 0;
+        if (argums.length === 1 && argums.includes(part)) return 0;
+        // if (argums.length === 1 && argums.includes("word") && part === "word") return 0;
 
         if (argums.includes(part)) {
             cns[part] = cns[part].replaceAll(" bg-blue-200", "").replaceAll("bg-blue-200", "");
@@ -27,7 +35,7 @@ function Navbar() {
             cns[part] += " bg-blue-200";
             argums.push(part);
         }
-        
+
         setcns({ ...cns });
         dispatch(setArguments(argums));
     };
