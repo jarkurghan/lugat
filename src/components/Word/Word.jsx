@@ -15,6 +15,7 @@ function Word() {
         const data = await SearchService.getWord({ word: param.word });
         setData(data);
         dispatch(endWait());
+        await SearchService.wordViewCountIncrement({ word: data.id });
     };
     useEffect(() => {
         getWordInfo();
@@ -47,7 +48,7 @@ function Word() {
                         <div className="mt-4 text-justify">
                             <span className="font-semibold">Sinonimlar.</span>{" "}
                             {data.synonyms.map((e, i) => (
-                                <span>
+                                <span key={i}>
                                     {e.word}
                                     {i !== data.synonyms.length - 1 && ", "}
                                 </span>
@@ -69,9 +70,9 @@ function Word() {
                     <div className="mt-2 text-justify">
                         <span className="font-semibold">Avtor.</span> {data.first_name} {data.last_name}
                     </div>
-                    {/* <div className="mt-2 text-justify">
-                        <span className="font-semibold">Ko'rishlar soni.</span> {data.view.count}
-                    </div> */}
+                    <div className="mt-2 text-justify">
+                        <span className="font-semibold">Ko'rishlar soni.</span> {data.view?.count || 1}
+                    </div>
                 </React.Fragment>
             )}
         </div>
