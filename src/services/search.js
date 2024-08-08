@@ -15,6 +15,23 @@ const SearchService = {
 
         return data;
     },
+
+    async getWord({ dispatch, word, args }) {
+        // if (word === "") return {};
+
+        // const searchParams = new URLSearchParams();
+        // searchParams.append("request", word);
+        // args.forEach((item) => searchParams.append("args", item));
+        // searchParams.toString();
+
+        const response = await axios.get(`/info/${word}`).catch((error) => {
+            console.log(error);
+            return error
+        });
+        // dispatch(setResult(data));
+
+        return response.data;
+    },
 };
 
 export default SearchService;
