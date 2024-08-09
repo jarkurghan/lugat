@@ -9,6 +9,7 @@ import "./App.css";
 import { getWait } from "./store/waiting";
 import { useSelector } from "react-redux";
 import Spinner from "./components/Spinner";
+import AboutPage from "./pages/About";
 
 function App() {
     const spinner = useSelector(getWait);
@@ -21,6 +22,7 @@ function App() {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/search" element={<SearchPage />} />
                 <Route path="/word/:word" element={<WordPage />} />
+                <Route path="/about" element={<AboutPage />} />
                 <Route path="/*" element={<Navigate to="/" />} />
             </Routes>
             <Footer />

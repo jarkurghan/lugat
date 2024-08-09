@@ -63,7 +63,7 @@
     box-sizing: border-box;
     position: fixed;
     margin: auto;
-    padding: 7px 10px;
+    padding: 10px 5px;
     transform: translate3d(0%, 0, 0);
     right: 0;
     top: 64px;
@@ -99,4 +99,26 @@
     float: right;
     color: red;
     cursor: pointer;
+}
+
+.menuItem {
+    font-size: 1.1em;
+    cursor: pointer;
+    margin-inline: 10px;
+    padding: 7px 10px;
+    transition: 200ms;
+    border-radius: 3px;
+}
+
+.menuItem:hover {
+    background-color: rgb(216, 229, 240);
+    border-bottom: none;
+}
+
+.menuItem:nth-last-child(n + 2) {
+    border-bottom: 1px solid #ddd;
+}
+
+.portfolio {
+    display: none;
 }

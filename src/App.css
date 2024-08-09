@@ -46,3 +46,49 @@ body {
 .hide-scroll::-webkit-scrollbar-track {
     background: #f1f1f1;
 }
+
+.logo {
+    padding: 5px 10px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: #444;
+    border-radius: 5px 0 5px 0;
+    position: relative;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    font-size: small;
+}
+
+.logo.content,
+.logo.after,
+.logo.before {
+    background-color: rgb(173, 195, 224);
+}
+
+.logo.after,
+.logo.before {
+    width: 180px;
+    height: 37px;
+    position: absolute;
+    content: " ";
+    border-radius: 2px;
+    opacity: 0.6;
+    z-index: 1;
+    border: 2px solid rgb(136, 174, 224);
+}
+
+.logo.before {
+    bottom: -3px;
+    right: 10px;
+}
+
+.logo.after {
+    top: -3px;
+    left: 10px;
+}
+
+.logo.content {
+    z-index: 2;
+}

@@ -2,9 +2,14 @@ import React, { useState } from "react";
 import HeaderMenu from "../Home/Header/Menu";
 import logo from "../../images/favicon.png";
 import Search from "./Search";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
     const [show, setShow] = useState(false);
+    const navigate = useNavigate();
+    const home = () => {
+        navigate("/");
+    };
 
     return (
         <div className="header no-copy">
@@ -13,7 +18,7 @@ function Header() {
                     <Search />
                 </div>
                 <div className="flex items-center gap-6">
-                    <div>
+                    <div className="cursor-pointer" onClick={home}>
                         <img className="h-6 mt-1" src={logo} alt="Your Company" />
                     </div>
                     <div className="text-2xl font-bold rounded-[50%] cursor-pointer w-8 text-center" onClick={() => setShow(!show)}>

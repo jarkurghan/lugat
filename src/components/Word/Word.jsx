@@ -30,11 +30,7 @@ function Word() {
                 <React.Fragment>
                     <h1 className="text-2xl font-normal font-serif text-gray-700 dark:text-white uppercase mb-1">{param.word}</h1>
                     <hr />
-                    {data?.definition?.definition && (
-                        <div className="mt-4 text-justify">
-                            <span className="font-semibold">Ta'rif.</span> {data.definition.definition}
-                        </div>
-                    )}
+                    {data?.definition?.definition && <div className="mt-4 text-justify">{data.definition.definition}</div>}
                     {data?.history?.history && (
                         <div className="mt-4 text-justify">
                             <span className="font-semibold">Kelib chiqish tarixi.</span> {data.history.history}
