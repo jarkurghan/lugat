@@ -1,21 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import SearchService from "../../services/search";
 import { endWait, getWait, startWait } from "../../store/waiting";
 
 function Word() {
     const param = useParams();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const spinner = useSelector(getWait);
     const [data, setData] = useState({});
 
     const getWordInfo = async () => {
         dispatch(startWait());
-        const data = await SearchService.getWord({ word: param.word });
-        setData(data);
-        dispatch(endWait());
-        await SearchService.wordViewCountIncrement({ word: data.id });
+        const data = await SearchService.getWord({ word: param.word, navigate, dispatch });
+        if (data?.id) {
+            setData(data);
+            dispatch(endWait());
+            await SearchService.wordViewCountIncrement({ word: data.id });
+        }
     };
     useEffect(() => {
         getWordInfo();

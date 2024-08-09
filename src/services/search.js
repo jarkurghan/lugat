@@ -1,36 +1,33 @@
 import getCookie from "../cookie/getCookie";
 import setCookie from "../cookie/setCookie";
-import { setResult } from "../store/word";
+import { setResult, setWord } from "../store/word";
 import axios from "./api";
 
 const SearchService = {
     async getWords({ dispatch, word, args }) {
-        if (word === "") return [];
+        try {
+            if (word === "") return [];
 
-        const searchParams = new URLSearchParams();
-        searchParams.append("request", word);
-        args.forEach((item) => searchParams.append("args", item));
-        searchParams.toString();
+            const searchParams = new URLSearchParams();
+            searchParams.append("request", word);
+            args.forEach((item) => searchParams.append("args", item));
+            searchParams.toString();
 
-        const { data } = await axios.get(`/search?${searchParams}`);
-        dispatch(setResult(data));
+            const { data } = await axios.get(`/search?${searchParams}`);
+            dispatch(setResult(data));
 
-        return data;
+            return data;
+        } catch (error) {
+            console.log(error);
+        }
     },
 
-    async getWord({ dispatch, word, args }) {
-        // if (word === "") return {};
-
-        // const searchParams = new URLSearchParams();
-        // searchParams.append("request", word);
-        // args.forEach((item) => searchParams.append("args", item));
-        // searchParams.toString();
-
+    async getWord({ word, navigate, dispatch }) {
         const response = await axios.get(`/info/${word}`).catch((error) => {
-            console.log(error);
+            dispatch(setWord(word));
+            navigate("/search");
             return error;
         });
-        // dispatch(setResult(data));
 
         return response.data;
     },
