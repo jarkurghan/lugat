@@ -53,19 +53,19 @@ function Navbar() {
     return (
         <div className="no-copy hide-scroll flex items-baseline gap-4 mb-10">
             <div className={cns.word} onClick={() => setActivePart("word")}>
-                word
+                so'z
             </div>
             <div className={cns.definition} onClick={() => setActivePart("definition")}>
-                definition
+                ta'rif
             </div>
             <div className={cns.history} onClick={() => setActivePart("history")}>
-                history&nbsp;of&nbsp;origin
+                kelib&nbsp;chiqish&nbsp;tarixi
             </div>
             <div className={cns.synonym} onClick={() => setActivePart("synonym")}>
-                synonyms
+                sinonim
             </div>
             <div className={cns.resource} onClick={() => setActivePart("resource")}>
-                in&nbsp;resources
+                adabiy&nbsp;manbalarda
             </div>
         </div>
     );
