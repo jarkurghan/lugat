@@ -51,7 +51,7 @@ function Navbar() {
     }, [args]);
 
     return (
-        <div className="no-copy hide-scroll flex items-baseline gap-4 mb-10">
+        <div className="no-copy hide-scroll flex items-baseline gap-4 mb-4">
             <div className={cns.word} onClick={() => setActivePart("word")}>
                 so'z
             </div>
