@@ -28,7 +28,7 @@
     clip-path: inset(-20px 0);
 }
 .loader::before {
-    content: "Loading";
+    content: "Lug'at";
 }
 .loader::after {
     content: "";
