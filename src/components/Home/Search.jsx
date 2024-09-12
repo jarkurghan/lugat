@@ -5,12 +5,14 @@ import { useNavigate } from "react-router-dom";
 import { endWait, startWait } from "../../store/waiting";
 import { useDispatch, useSelector } from "react-redux";
 import { getArguments, getWord, setWord } from "../../store/word";
+import { getCount, getPage } from "../../store/word";
 
 const SearchForm = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const word = useSelector(getWord);
     const args = useSelector(getArguments);
+    const count = useSelector(getCount);
 
     const changeWord = async (e) => {
         dispatch(setWord(e.target.value));
@@ -22,7 +24,7 @@ const SearchForm = () => {
         // console.log(e);
 
         dispatch(startWait());
-        await SearchService.getWords({ dispatch, word, args });
+        await SearchService.getWords({ dispatch, word, args, page: 1, count, old: [] });
         dispatch(endWait());
     };
 

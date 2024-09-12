@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getArguments, getWord, setArguments } from "../../store/word";
 import { endWait, startWait } from "../../store/waiting";
+import { getCount, getPage } from "../../store/word";
 import SearchService from "../../services/search";
 
 function Navbar() {
     const dispatch = useDispatch();
     const word = useSelector(getWord);
     const args = useSelector(getArguments);
+    const count = useSelector(getCount);
     const defcns = "shadow-md px-4 py-1 rounded-md border cursor-pointer bg-blue-200";
     const [cns, setcns] = useState({});
 
@@ -42,7 +44,7 @@ function Navbar() {
 
     const onSearch = async () => {
         dispatch(startWait());
-        await SearchService.getWords({ dispatch, word, args });
+        await SearchService.getWords({ dispatch, word, args, page: 1, count, old: [] });
         dispatch(endWait());
     };
 

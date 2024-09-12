@@ -1,20 +1,23 @@
 import getCookie from "../cookie/getCookie";
 import setCookie from "../cookie/setCookie";
-import { setResult, setWord } from "../store/word";
+import { setPages, setResult, setWord } from "../store/word";
 import axios from "./api";
 
 const SearchService = {
-    async getWords({ dispatch, word, args }) {
+    async getWords({ dispatch, word, args, page, count, old }) {
         try {
             if (word === "") return [];
 
             const searchParams = new URLSearchParams();
             searchParams.append("request", word);
             args.forEach((item) => searchParams.append("args", item));
+            searchParams.append("page", page);
+            searchParams.append("count", count);
             searchParams.toString();
 
             const { data } = await axios.get(`/search?${searchParams}`);
-            dispatch(setResult(data));
+            dispatch(setResult([...old, ...data.data]));
+            dispatch(setPages(Math.ceil(data.count / count)));
 
             return data;
         } catch (error) {

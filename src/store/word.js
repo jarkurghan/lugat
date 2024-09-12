@@ -5,6 +5,7 @@ const initialState = {
     args: ["word", "definition", "history", "synonym", "resource"],
     value: [],
     page: 1,
+    count: 3,
     pages: 1,
 };
 
@@ -24,13 +25,16 @@ export const resultSlice = createSlice({
         setPage: (state, action) => {
             state.page = action.payload;
         },
+        setCount: (state, action) => {
+            state.count = action.payload;
+        },
         setPages: (state, action) => {
             state.pages = action.payload;
         },
     },
 });
 
-export const { setWord, setResult, setArguments, setPage, setPages } = resultSlice.actions;
+export const { setWord, setResult, setArguments, setPage, setPages, setCount } = resultSlice.actions;
 
 export const getWord = (state) => {
     return state.words.word;
@@ -50,6 +54,10 @@ export const getPages = (state) => {
 
 export const getPage = (state) => {
     return state.words.page;
+};
+
+export const getCount = (state) => {
+    return state.words.count;
 };
 
 export default resultSlice.reducer;
