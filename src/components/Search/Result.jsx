@@ -23,25 +23,28 @@ function Search() {
     const [page, setPage] = useState(1);
     const count = useSelector(getCount);
 
+    const [next, setNext] = useState(false);
     const onSearch = async () => {
-        dispatch(startWait());
-        await SearchService.getWords({ dispatch, word, args, page: page + 1, count, old: results });
-        dispatch(endWait());
         return 0;
     };
 
     const onScroll = async () => {
-        console.log("2x");
-
-        const element = document.getElementById("search-spin");
-        if (element && elementInViewport(element)) {
-            await onSearch().then(() => {
-                onScroll();
-            });
-            // console.log(page);
-            setPage(page + 1);
-        }
+        setNext(true);
     };
+
+    useEffect(() => {
+        (async () => {
+            const element = document.getElementById("search-spin");
+            if (next && element && elementInViewport(element)) {
+                dispatch(startWait());
+                await SearchService.getWords({ dispatch, word, args, page: page + 1, count, old: results });
+                dispatch(endWait());
+                setNext(false);
+                onScroll();
+                setPage(page + 1);
+            }
+        })();
+    }, [next]);
 
     useEffect(() => {
         onScroll();
@@ -60,6 +63,7 @@ function Search() {
                 <div id="search-spin"></div>
             </div>
             {results.length === 0 && !spinner && <SearchNotFound />}
+            pages
         </div>
     );
 }
