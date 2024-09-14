@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
-import { getArguments, getCount, getResult, getWord } from "../../store/word";
+import { getArguments, getCount, getPages, getResult, getWord } from "../../store/word";
 import { useDispatch, useSelector } from "react-redux";
 import SearchItem from "./ResultItem";
 import SearchNotFound from "./ResultNotFound";
 import { endWait, getWait, startWait } from "../../store/waiting";
 import { elementInViewport } from "../../events/elementInViewport";
 import SearchService from "../../services/search";
+import Pagination from "./Paginition";
 
 function Search() {
     const results = useSelector(getResult);
@@ -20,7 +21,6 @@ function Search() {
 
     const dispatch = useDispatch();
     const args = useSelector(getArguments);
-    const [page, setPage] = useState(1);
     const count = useSelector(getCount);
 
     const [next, setNext] = useState(false);
@@ -32,19 +32,19 @@ function Search() {
         setNext(true);
     };
 
-    useEffect(() => {
-        (async () => {
-            const element = document.getElementById("search-spin");
-            if (next && element && elementInViewport(element)) {
-                dispatch(startWait());
-                await SearchService.getWords({ dispatch, word, args, page: page + 1, count, old: results });
-                dispatch(endWait());
-                setNext(false);
-                onScroll();
-                setPage(page + 1);
-            }
-        })();
-    }, [next]);
+    // useEffect(() => {
+    //     (async () => {
+    //         const element = document.getElementById("search-spin");
+    //         if (next && element && elementInViewport(element)) {
+    //             dispatch(startWait());
+    //             await SearchService.getWords({ dispatch, word, args, page: page + 1, count, old: results });
+    //             dispatch(endWait());
+    //             setNext(false);
+    //             onScroll();
+    //             setPage(page + 1);
+    //         }
+    //     })();
+    // }, [next]);
 
     useEffect(() => {
         onScroll();
@@ -64,6 +64,7 @@ function Search() {
             </div>
             {results.length === 0 && !spinner && <SearchNotFound />}
             pages
+            {results.length > 0 && <Pagination />}
         </div>
     );
 }
