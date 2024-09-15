@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "./Navbar";
-import { getArguments, getCount, getPages, getResult, getWord } from "../../store/word";
+import { getArguments, getCount, } from "../../store/word";
+import { getResult, getWord } from "../../store/word";
 import { useDispatch, useSelector } from "react-redux";
-import SearchItem from "./ResultItem";
+import { getWait } from "../../store/waiting";
 import SearchNotFound from "./ResultNotFound";
-import { endWait, getWait, startWait } from "../../store/waiting";
-import { elementInViewport } from "../../events/elementInViewport";
-import SearchService from "../../services/search";
+import SearchItem from "./ResultItem";
 import Pagination from "./Paginition";
+import Navbar from "./Navbar";
 
 function Search() {
     const results = useSelector(getResult);
@@ -19,38 +18,6 @@ function Search() {
         setReq(word);
     }, [results]);
 
-    const dispatch = useDispatch();
-    const args = useSelector(getArguments);
-    const count = useSelector(getCount);
-
-    const [next, setNext] = useState(false);
-    const onSearch = async () => {
-        return 0;
-    };
-
-    const onScroll = async () => {
-        setNext(true);
-    };
-
-    // useEffect(() => {
-    //     (async () => {
-    //         const element = document.getElementById("search-spin");
-    //         if (next && element && elementInViewport(element)) {
-    //             dispatch(startWait());
-    //             await SearchService.getWords({ dispatch, word, args, page: page + 1, count, old: results });
-    //             dispatch(endWait());
-    //             setNext(false);
-    //             onScroll();
-    //             setPage(page + 1);
-    //         }
-    //     })();
-    // }, [next]);
-
-    useEffect(() => {
-        onScroll();
-        window.addEventListener("scroll", onScroll);
-        window.addEventListener("resize", onScroll);
-    }, []);
 
     return (
         <div className="max-w-5xl xl:max-w-4xl m-6 xl:ml-40">
