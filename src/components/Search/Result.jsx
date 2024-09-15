@@ -31,7 +31,9 @@ function Search() {
             </div>
             {results.length === 0 && !spinner && <SearchNotFound />}
             pages
-            {results.length > 0 && <Pagination />}
+            {/* {results.length > 0 && */}
+             <Pagination />
+            {/* } */}
         </div>
     );
 }
