@@ -4,18 +4,18 @@ import SearchService from "../../services/search";
 import { useNavigate } from "react-router-dom";
 import { endWait, startWait } from "../../store/waiting";
 import { useDispatch, useSelector } from "react-redux";
-import { getArguments, getWord, setWord } from "../../store/word";
-import { getCount, getPage } from "../../store/word";
+import { getArguments, getWordTemp, setWord } from "../../store/word";
+import { getCount, setWordTemp } from "../../store/word";
 
 const SearchForm = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const word = useSelector(getWord);
+    const wordTemp = useSelector(getWordTemp);
     const args = useSelector(getArguments);
     const count = useSelector(getCount);
 
     const changeWord = async (e) => {
-        dispatch(setWord(e.target.value));
+        dispatch(setWordTemp(e.target.value));
     };
 
     const onSearch = async (e) => {
@@ -23,8 +23,9 @@ const SearchForm = () => {
         navigate("/search");
         // console.log(e);
 
+        dispatch(setWord(wordTemp));
         dispatch(startWait());
-        await SearchService.getWords({ dispatch, word, args, page: 1, count });
+        await SearchService.getWords({ dispatch, word: wordTemp, args, page: 1, count });
         dispatch(endWait());
     };
 
@@ -39,13 +40,13 @@ const SearchForm = () => {
                 </div>
                 <input
                     onChange={changeWord}
-                    defaultValue={word}
+                    defaultValue={wordTemp}
                     id="default-search"
                     className="transition block w-full outline-none p-4 ps-10 pr-24 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="So'zni kiriting"
                 />
                 <button
-                    disabled={word === ""}
+                    disabled={wordTemp === ""}
                     type="submit"
                     className="transition text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 disabled:bg-blue-200 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 >

@@ -2,10 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     word: "",
+    word_temp: "",
     args: ["word", "definition", "history", "synonym", "resource"],
     value: [],
     page: 1,
-    count: 3,
+    count: 30,
     pages: 1,
 };
 
@@ -15,6 +16,9 @@ export const resultSlice = createSlice({
     reducers: {
         setWord: (state, action) => {
             state.word = action.payload;
+        },
+        setWordTemp: (state, action) => {
+            state.word_temp = action.payload;
         },
         setResult: (state, action) => {
             state.value = action.payload;
@@ -34,10 +38,14 @@ export const resultSlice = createSlice({
     },
 });
 
-export const { setWord, setResult, setArguments, setPage, setPages, setCount } = resultSlice.actions;
+export const { setWord, setResult, setArguments, setPage, setPages, setCount, setWordTemp } = resultSlice.actions;
 
 export const getWord = (state) => {
     return state.words.word;
+};
+
+export const getWordTemp = (state) => {
+    return state.words.word_temp;
 };
 
 export const getResult = (state) => {

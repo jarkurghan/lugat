@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { getArguments, getCount } from "../../store/word";
 import { getResult, getWord } from "../../store/word";
-import { useDispatch, useSelector } from "react-redux";
 import { getWait } from "../../store/waiting";
+import { getPages } from "../../store/word";
+import { useSelector } from "react-redux";
 import SearchNotFound from "./ResultNotFound";
 import SearchItem from "./ResultItem";
 import Pagination from "./Paginition";
@@ -11,6 +11,7 @@ import Navbar from "./Navbar";
 function Search() {
     const results = useSelector(getResult);
     const spinner = useSelector(getWait);
+    const pages = useSelector(getPages);
     const word = useSelector(getWord);
 
     const [req, setReq] = useState(word);
@@ -29,10 +30,11 @@ function Search() {
                 <div id="search-spin"></div>
             </div>
             {results.length === 0 && !spinner && <SearchNotFound />}
-            pages
-            {/* {results.length > 0 && */}
-            <Pagination />
-            {/* } */}
+            {pages > 1 && (
+                <div className="flex items-center gap-2">
+                    <span>Sahifalar:</span> <Pagination />
+                </div>
+            )}
         </div>
     );
 }
