@@ -1,18 +1,25 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "./Navbar";
-import { getArguments, getCount, getPages, getResult, getWord } from "../../store/word";
+import { getArguments, getCount, setPage } from "../../store/word";
+import { getPage, getPages, getWord } from "../../store/word";
 import { useDispatch, useSelector } from "react-redux";
-import SearchItem from "./ResultItem";
-import SearchNotFound from "./ResultNotFound";
-import { endWait, getWait, startWait } from "../../store/waiting";
-import { elementInViewport } from "../../events/elementInViewport";
+import { endWait, startWait } from "../../store/waiting";
 import SearchService from "../../services/search";
 
 function Pagination() {
-    const [page, setPage] = useState(1);
-    // const pages = useSelector(getPages);
-    const pages = 10;
+    const dispatch = useDispatch();
+    const pages = useSelector(getPages);
+    const page = useSelector(getPage);
+    const word = useSelector(getWord);
+    const args = useSelector(getArguments);
+    const count = useSelector(getCount);
     const [pageList, setPageList] = useState([]);
+
+    const newPage = async (next) => {
+        dispatch(startWait());
+        await SearchService.getWords({ dispatch, word, args, page: next, count, old: [] });
+        dispatch(endWait());
+        dispatch(setPage(next));
+    };
 
     useEffect(() => {
         let arr = [];
@@ -43,7 +50,7 @@ function Pagination() {
                     {page > 1 && (
                         <li>
                             <span
-                                onClick={() => setPage(page - 1)}
+                                onClick={() => newPage(page - 1)}
                                 className="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                             >
                                 <span className="sr-only">Previous</span>
@@ -58,7 +65,7 @@ function Pagination() {
                             <li>
                                 <span
                                     style={e === page ? { backgroundColor: "rgb(191 219 254)" } : {}}
-                                    onClick={() => setPage(e)}
+                                    onClick={() => newPage(e)}
                                     className="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                                 >
                                     {e}
@@ -75,7 +82,7 @@ function Pagination() {
                     {page < pages && (
                         <li>
                             <span
-                                onClick={() => setPage(page + 1)}
+                                onClick={() => newPage(page + 1)}
                                 className="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                             >
                                 <span className="sr-only">Next</span>

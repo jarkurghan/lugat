@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getArguments, getCount, } from "../../store/word";
+import { getArguments, getCount } from "../../store/word";
 import { getResult, getWord } from "../../store/word";
 import { useDispatch, useSelector } from "react-redux";
 import { getWait } from "../../store/waiting";
@@ -18,7 +18,6 @@ function Search() {
         setReq(word);
     }, [results]);
 
-
     return (
         <div className="max-w-5xl xl:max-w-4xl m-6 xl:ml-40">
             <Navbar />
@@ -32,7 +31,7 @@ function Search() {
             {results.length === 0 && !spinner && <SearchNotFound />}
             pages
             {/* {results.length > 0 && */}
-             <Pagination />
+            <Pagination />
             {/* } */}
         </div>
     );
