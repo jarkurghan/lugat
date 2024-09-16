@@ -44,7 +44,7 @@ function Navbar() {
 
     const onSearch = async () => {
         dispatch(startWait());
-        await SearchService.getWords({ dispatch, word, args, page: 1, count, old: [] });
+        await SearchService.getWords({ dispatch, word, args, page: 1, count });
         dispatch(endWait());
     };
 

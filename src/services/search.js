@@ -4,7 +4,7 @@ import { setPages, setResult, setWord } from "../store/word";
 import axios from "./api";
 
 const SearchService = {
-    async getWords({ dispatch, word, args, page, count, old }) {
+    async getWords({ dispatch, word, args, page, count }) {
         try {
             if (word === "") return [];
 
@@ -16,7 +16,7 @@ const SearchService = {
             searchParams.toString();
 
             const { data } = await axios.get(`/search?${searchParams}`);
-            dispatch(setResult([...old, ...data.data]));
+            dispatch(setResult(data.data));
             dispatch(setPages(Math.ceil(data.count / count)));
 
             return data;

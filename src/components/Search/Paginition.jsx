@@ -16,7 +16,7 @@ function Pagination() {
 
     const newPage = async (next) => {
         dispatch(startWait());
-        await SearchService.getWords({ dispatch, word, args, page: next, count, old: [] });
+        await SearchService.getWords({ dispatch, word, args, page: next, count });
         dispatch(endWait());
         dispatch(setPage(next));
     };

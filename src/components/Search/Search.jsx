@@ -21,7 +21,7 @@ const Search = () => {
         // console.log(e);
 
         dispatch(startWait());
-        await SearchService.getWords({ dispatch, word, args, page: 1, count, old: [] });
+        await SearchService.getWords({ dispatch, word, args, page: 1, count });
         dispatch(endWait());
     };
 
